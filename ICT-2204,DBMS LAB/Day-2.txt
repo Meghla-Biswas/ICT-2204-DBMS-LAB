@@ -1,0 +1,66 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| iit                |
+| information_schema |
+| meghla             |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> notee
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| iit                |
+| information_schema |
+| meghla             |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE  ICT;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> CREATE DATABASE IIT14THBATCH;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> Show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| ict                |
+| iit                |
+| iit14thbatch       |
+| information_schema |
+| meghla             |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> USE IIT14THBATCH
+Database changed
+mysql> CREATE TABLE STUDENT(
+    -> STUDENT_ID INT,STUDENT_NAME VARCHAR(30),SESSION(10),CGPA(5,2),GENDER VARCHAR(7), MOBILEPHONE VARCHAR(15),EMAIL VARCHAR(100), DOB DATE);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(10),CGPA(5,2),GENDER VARCHAR(7), MOBILEPHONE VARCHAR(15),EMAIL VARCHAR(100), DO' at line 2
+mysql> CREATE TABLE STUDENT( STUDENT_ID INT,STUDENT_NAME VARCHAR(30),SESSION VARCHAR(10),CGPA FLOAT(5,2),GENDER VARCHAR(7), MOBILEPHONE VARCHAR(15),EMAIL VARCHAR(100), DOB DATE);
+Query OK, 0 rows affected, 1 warning (0.07 sec)
+
+mysql> SHOW TABLES;
++------------------------+
+| Tables_in_iit14thbatch |
++------------------------+
+| student                |
++------------------------+
+1 row in set (0.01 sec)
+
