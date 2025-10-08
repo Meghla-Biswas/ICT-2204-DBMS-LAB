@@ -64,3 +64,249 @@ mysql> SHOW TABLES;
 +------------------------+
 1 row in set (0.01 sec)
 
+mysql> DESC STUDENT;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| STUDENT_ID   | int          | YES  |     | NULL    |       |
+| STUDENT_NAME | varchar(30)  | YES  |     | NULL    |       |
+| SESSION      | varchar(10)  | YES  |     | NULL    |       |
+| CGPA         | float(5,2)   | YES  |     | NULL    |       |
+| GENDER       | varchar(7)   | YES  |     | NULL    |       |
+| MOBILEPHONE  | varchar(15)  | YES  |     | NULL    |       |
+| EMAIL        | varchar(100) | YES  |     | NULL    |       |
+| DOB          | date         | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql> CREATE TABLE CUST(CUST_ID INT NOT NULL,CUST_NAME VARCHAR(40));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT  INTO CUST(CUST_ID, CUST_NAME) VALUES( 2006,'Meghla');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM CUST;
++---------+-----------+
+| CUST_ID | CUST_NAME |
++---------+-----------+
+|    2006 | Meghla    |
++---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> INSERT  INTO CUST(CUST_ID, CUST_NAME) VALUES( ,'Meghla');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','Meghla')' at line 1
+mysql> DROP TABLE CUST;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>  SELECT * FROM CUST;
+ERROR 1146 (42S02): Table 'iit14thbatch.cust' doesn't exist
+mysql>  CREATE TABLE CUST(CUST_ID INT UNIQUE,CUST_NAME VARCHAR(40));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT  INTO CUST(CUST_ID, CUST_NAME) VALUES(2006 ,'Meghla');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT  INTO CUST(CUST_ID, CUST_NAME) VALUES(2006 ,'Meghla');
+ERROR 1062 (23000): Duplicate entry '2006' for key 'cust.CUST_ID'
+mysql> DROP TABLE CUST;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE CUST(CUST_ID INT NOT NULL,CUST_NAME VARCHAR(40));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> 
+mysql> 
+mysql> CREATE TABLE CUST(CUST_ID INT,CUST_NAME VARCHAR(40),UNIQUE(CUST_ID));
+ERROR 1050 (42S01): Table 'cust' already exists
+mysql> DROP TABLE CUST;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  SELECT * FROM CUST; CREATE TABLE CUST(CUST_ID INT,CUST_NAME VARCHAR(40),UNIQUE(CUST_ID));
+ERROR 1146 (42S02): Table 'iit14thbatch.cust' doesn't exist
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE CUST(CUST_ID INT,CUST_NAME VARCHAR(20), UNIQUE(CUST_ID));
+ERROR 1050 (42S01): Table 'cust' already exists
+mysql> DESC CUST;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| CUST_ID   | int         | YES  | UNI | NULL    |       |
+| CUST_NAME | varchar(40) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DROP TABLE CUST;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DROP TABLE CUST;
+ERROR 1051 (42S02): Unknown table 'iit14thbatch.cust'
+mysql> DESC CUST;
+ERROR 1146 (42S02): Table 'iit14thbatch.cust' doesn't exist
+mysql> ^C
+mysql>  CREATE TABLE CUST(CUST_ID INT,CUST_NAME VARCHAR(20), UNIQUE(CUST_ID));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO CUST(CUST_ID, CUST_NAME) VALUES(2007,'SMITA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> DROP TABLE CUST;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE CUST(CUST_ID INT,CUST_NAME VARCHAR(20), CONSTRAINT uc_cust_id UNIQUE(CUST_ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> CREATE TABLE CUST(CUST_ID INT,CUST_NAME VARCHAR(20), CONSTRAINT uc_cust_id UNIQUE(CUST_ID));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO CUST(CUST_ID, CUST_NAME) VALUES(2006,'MEGHLA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CUST(CUST_ID, CUST_NAME) VALUES(2006,'MEGHLA');
+ERROR 1062 (23000): Duplicate entry '2006' for key 'cust.uc_cust_id'
+mysql> CREATE TABLE INFO(STU_NAME VARCHAR(30),STU_AGE INT);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC INFO;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| STU_NAME | varchar(30) | YES  |     | NULL    |       |
+| STU_AGE  | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> INSERT INTO INFO(STU_NAME,STU_AGE) VALUES('MEGHLA',22);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> DESC INFO;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| STU_NAME | varchar(30) | YES  |     | NULL    |       |
+| STU_AGE  | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM INFO;
++----------+---------+
+| STU_NAME | STU_AGE |
++----------+---------+
+| MEGHLA   |      22 |
++----------+---------+
+1 row in set (0.00 sec)
+
+mysql>  CREATE TABLE INFO(STU_NAME VARCHAR(30),STU_AGE INT, UNIQUE(STU_AGE));
+ERROR 1050 (42S01): Table 'info' already exists
+mysql> DROP TABLE INFO;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE INFO(STU_NAME VARCHAR(30),STU_AGE INT, UNIQUE(STU_AGE));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>  INSERT INTO INFO(STU_NAME,STU_AGE) VALUES('MEGHLA',22);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO INFO(STU_NAME,STU_AGE) VALUES('MEGHLA',22);
+ERROR 1062 (23000): Duplicate entry '22' for key 'info.STU_AGE'
+mysql> DROP TABLE INFO;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE INFO(STU_NAME VARCHAR(30),STU_AGE INT, CONSTRAINT uc_cust_id UNIQUE(CUST_ID));
+ERROR 1072 (42000): Key column 'CUST_ID' doesn't exist in table
+mysql> CREATE TABLE INFO(STU_NAME VARCHAR(30),STU_AGE INT, CONSTRAINT uc_cust_id UNIQUE(STU_AGE));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>  INSERT INTO INFO(STU_NAME,STU_AGE) VALUES('MEGHLA',22);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO INFO(STU_NAME,STU_AGE) VALUES('MEGHLA',22);
+ERROR 1062 (23000): Duplicate entry '22' for key 'info.uc_cust_id'
+mysql> DROP TABLE INFO;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  CREATE TABLE INFO(STU_NAME VARCHAR(30),STU_AGE INT NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql>  CREATE TABLE INFO(STU_NAME VARCHAR(30),STU_AGE INT NOT NULL);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>  INSERT INTO INFO(STU_NAME,STU_AGE) VALUES('MEGHLA',22);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO INFO(STU_NAME,STU_AGE) VALUES('MEGHLA', );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> CREATE TABLE PRIMARY(NAME VARCHAR(20) , ROLL INT primary key, AGE INT);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'PRIMARY(NAME VARCHAR(20) , ROLL INT primary key, AGE INT)' at line 1
+mysql> CREATE TABLE PRIMARY(NAME VARCHAR(20) , ROLL INT, AGE INT PRIMARY KEY);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'PRIMARY(NAME VARCHAR(20) , ROLL INT, AGE INT PRIMARY KEY)' at line 1
+mysql> CREATE TABLE DATA(NAME VARCHAR(20) , ROLL INT, AGE INT PRIMARY KEY);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO(NAME, ROLL, AGE) VALUES('MEGHLA',2006,22);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(NAME, ROLL, AGE) VALUES('MEGHLA',2006,22)' at line 1
+mysql> INSERT INTO(NAME, ROLL, AGE) VALUES('MEGHLA',2006,22);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(NAME, ROLL, AGE) VALUES('MEGHLA',2006,22)' at line 1
+mysql> DROP TABLE PRIMARY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'PRIMARY' at line 1
+mysql>  CREATE TABLE DATATABLE(NAME VARCHAR(20) , AGE INT PRIMARY KEY);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> ^C
+mysql>  INSERT INTO(NAME, AGE) VALUES('MEGHLA',22);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(NAME, AGE) VALUES('MEGHLA',22)' at line 1
+mysql>  INSERT INTO DATATABLE(NAME, ROLL, AGE) VALUES('MEGHLA',2006,22);
+ERROR 1054 (42S22): Unknown column 'ROLL' in 'field list'
+mysql>  INSERT INTO DATATABLE(NAME, AGE) VALUES('MEGHLA',22);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO(NAME, ROLL, AGE) VALUES('MEGHLA',2006,22);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(NAME, ROLL, AGE) VALUES('MEGHLA',2006,22)' at line 1
+mysql>   INSERT INTO DATATABLE(NAME, AGE) VALUES('MEGHLA',22);
+ERROR 1062 (23000): Duplicate entry '22' for key 'datatable.PRIMARY'
+mysql> DROP TABLE DATATABLE;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE DATATABLE(NAME VARCHAR(20) , AGE INT, PRIMARY KEY(AGE));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>  INSERT INTO DATATABLE(NAME, AGE) VALUES('MEGHLA',22);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO DATATABLE(NAME, AGE) VALUES('MEGHLA',22);
+ERROR 1062 (23000): Duplicate entry '22' for key 'datatable.PRIMARY'
+mysql> DROP TABLE DATATABLE;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE DATATABLE(NAME VARCHAR(20) , AGE INT, CONSTRAINT uc_cust_id UNIQUE(AGE));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>  INSERT INTO DATATABLE(NAME, AGE) VALUES('MEGHLA',22);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO DATATABLE(NAME, AGE) VALUES('MEGHLA',22);
+ERROR 1062 (23000): Duplicate entry '22' for key 'datatable.uc_cust_id'
+mysql> CREATE TABLE DATATABLE(NAME VARCHAR(20) , AGE INT, CONSTRAINT uc_cust_id PRIMARY KEY(AGE));
+ERROR 1050 (42S01): Table 'datatable' already exists
+mysql> DROP TABLE DATATABLE;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  CREATE TABLE DATATABLE(NAME VARCHAR(20) , AGE INT, CONSTRAINT uc_cust_id PRIMARY KEY(AGE));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>   INSERT INTO DATATABLE(NAME, AGE) VALUES('MEGHLA',22);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>   INSERT INTO DATATABLE(NAME, AGE) VALUES('MEGHLA',22);
+ERROR 1062 (23000): Duplicate entry '22' for key 'datatable.PRIMARY'
+mysql> DROP TABLE DATATABLE;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE DATATABLE(NAME VARCHAR(20) , AGE INT PRIMARY KEY);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>  INSERT INTO DATATABLE(NAME, AGE) VALUES('MEGHLA',22);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO DATATABLE(NAME, AGE) VALUES('MEGHLA',22);
+ERROR 1062 (23000): Duplicate entry '22' for key 'datatable.PRIMARY'
