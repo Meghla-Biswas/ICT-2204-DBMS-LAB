@@ -1,0 +1,187 @@
+mysql> Terminal close -- exit!
+mysql> USE IIT14THBATCH;
+Database changed
+
+mysql> CREATE TABLE MITA(NAME VARCHAR(10),ID INT,PRIMARY KEY(NAME,ID));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO MITA(NAME,ID) VALUES('MITA',345);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO MITA(NAME,ID) VALUES('MITA',345);
+ERROR 1062 (23000): Duplicate entry 'MITA-345' for key 'mita.PRIMARY'
+mysql> SELECT * FROM MITA;
++------+-----+
+| NAME | ID  |
++------+-----+
+| MITA | 345 |
++------+-----+
+1 row in set (0.00 sec)
+
+
+mysql> DESC MITA;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| NAME  | varchar(10) | NO   | PRI | NULL    |       |
+| ID    | int         | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+mysql> CREATE TABLE USER_TYPE_TABLE(USER_TYPE_ID INT PRIMARY KEY,USER_TYPE_NAME VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO USER_TYPE_TABLE(USER_TYPE_ID,USER_TYPE_NAME) VALUES(3456,'MITAAA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO USER_TYPE_TABLE(USER_TYPE_ID,USER_TYPE_NAME) VALUES(45,'RITAA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO USER_TYPE_TABLE(USER_TYPE_ID,USER_TYPE_NAME) VALUES(55,'GITAA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO USER_TYPE_TABLE(USER_TYPE_ID,USER_TYPE_NAME) VALUES(65,'SITAA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT* FROM USER_TYPE_TABLE;
++--------------+----------------+
+| USER_TYPE_ID | USER_TYPE_NAME |
++--------------+----------------+
+|           45 | RITAA          |
+|           55 | GITAA          |
+|           65 | SITAA          |
+|         3456 | MITAAA         |
++--------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql>  CREATE TABLE USER(USER_ID INT PRIMARY KEY,USER_NAME VARCHAR(30),DOB DATE,USER_TYPE_ID INT,FOREIGN KEY(USER_TYPE_ID) REFERENCES USER_TYPE_TABLE(USER_TYPE_ID));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO USER(USER_ID,USER_NAME,DOB,USER_TYPE_ID) VALUES(45444,'RITAA','2000-01-01',45);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO USER(USER_ID,USER_NAME,DOB,USER_TYPE_ID) VALUES(45444,'RITAA','2000-01-01',5);
+ERROR 1062 (23000): Duplicate entry '45444' for key 'user.PRIMARY'
+mysql> INSERT INTO USER(USER_ID,USER_NAME,DOB,USER_TYPE_ID) VALUES(100,'RITAA','2000-01-01',5);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`iit14thbatch`.`user`, CONSTRAINT `user_ibfk_1` FOREIGN KEY (`USER_TYPE_ID`) REFERENCES `user_type_table` (`USER_TYPE_ID`))
+mysql> INSERT INTO USER(USER_ID,USER_NAME,DOB,USER_TYPE_ID) VALUES(1007,'RIT','2000-01-01',8);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`iit14thbatch`.`user`, CONSTRAINT `user_ibfk_1` FOREIGN KEY (`USER_TYPE_ID`) REFERENCES `user_type_table` (`USER_TYPE_ID`))
+mysql> INSERT INTO USER(USER_ID,USER_NAME,DOB,USER_TYPE_ID) VALUES(1099,'RIT','2000-01-01',65);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  CREATE TABLE USER_2(USER_ID INT PRIMARY KEY,USER_NAME VARCHAR(30),DOB DATE,USER_TYPE_ID INT, CONSTRAINT fk_user_type_id FOREIGN KEY(USER_TYPE_ID) REFERENCES USER_TYPE_TABLE(USER_TYPE_ID));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO USER(USER_ID,USER_NAME,DOB,USER_TYPE_ID) VALUES(109,'RppIT','2000-01-01',9995);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`iit14thbatch`.`user`, CONSTRAINT `user_ibfk_1` FOREIGN KEY (`USER_TYPE_ID`) REFERENCES `user_type_table` (`USER_TYPE_ID`))
+mysql> INSERT INTO USER(USER_ID,USER_NAME,DOB,USER_TYPE_ID) VALUES(109,'RppIT','2000-01-01',55);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> CREATE TABLE HALL(HALL_ID INT PRIMARY KEY, HALL_NAME VARCHAR(20),HALL_CODE INT);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO HALL(HALL_ID, HALL_NAME,HALL_CODE) VALUES(1,'PRITILATA',10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO HALL(HALL_ID, HALL_NAME,HALL_CODE) VALUES(2,'JAHANARA',11);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO HALL(HALL_ID, HALL_NAME,HALL_CODE) VALUES(3,'ROKEYA',12);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO HALL(HALL_ID, HALL_NAME,HALL_CODE) VALUES(4,'TARAMON',13);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM HALL;
++---------+-----------+-----------+
+| HALL_ID | HALL_NAME | HALL_CODE |
++---------+-----------+-----------+
+|       1 | PRITILATA |        10 |
+|       2 | JAHANARA  |        11 |
+|       3 | ROKEYA    |        12 |
+|       4 | TARAMON   |        13 |
++---------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE HALL1(HALL1_ID INT PRIMARY KEY, HALL_NAME VARCHAR(20), HALL_ID INT,FOREIGN KEY(HALL_ID) REFERENCES HALL(HALL_ID));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO HALL1(HALL1_ID, HALL_NAME,HALL_ID) VALUES(22,'TARAMON',1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO HALL1(HALL1_ID, HALL_NAME,HALL_ID) VALUES(29,'TARAMONBIBI',7);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`iit14thbatch`.`hall1`, CONSTRAINT `hall1_ibfk_1` FOREIGN KEY (`HALL_ID`) REFERENCES `hall` (`HALL_ID`))
+mysql> CREATE TABLE HALL2(HALL2_ID INT PRIMARY KEY, HALL2_NAME VARCHAR(20),HALL_ID INT, CONSTRAINT fk_hall_id FOREIGN KEY(HALL_ID) REFERENCES HALL(HALL_ID));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO HALL2(HALL2_ID, HALL2_NAME,HALL_ID) VALUES(32,'SUFIYA',4);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO HALL2(HALL2_ID, HALL2_NAME,HALL_ID) VALUES(33,'KAMAL',9);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`iit14thbatch`.`hall2`, CONSTRAINT `fk_hall_id` FOREIGN KEY (`HALL_ID`) REFERENCES `hall` (`HALL_ID`))
+mysql> SELECT* FROM HALL1;
++----------+-----------+---------+
+| HALL1_ID | HALL_NAME | HALL_ID |
++----------+-----------+---------+
+|       22 | TARAMON   |       1 |
++----------+-----------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT* FROM HALL2;
++----------+------------+---------+
+| HALL2_ID | HALL2_NAME | HALL_ID |
++----------+------------+---------+
+|       32 | SUFIYA     |       4 |
++----------+------------+---------+
+1 row in set (0.00 sec)
+
+mysql>  CREATE TABLE PERSON(PERSON_ID INT,PERSON_NAME VARCHAR(20),PERSON_AGE INT, CHECK(AGE>=18));
+ERROR 3820 (HY000): Check constraint 'person_chk_1' refers to non-existing column 'AGE'.
+mysql>  CREATE TABLE PERSON(PERSON_ID INT,PERSON_NAME VARCHAR(20),PERSON_AGE INT, CHECK(PERSON_AGE>=18));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO PERSON(PERSON_ID, PERSON_NAME,PERSON_AGE) VALUES(1,'ABC',10);
+ERROR 3819 (HY000): Check constraint 'person_chk_1' is violated.
+mysql> INSERT INTO PERSON(PERSON_ID, PERSON_NAME,PERSON_AGE) VALUES(1,'ABC',30);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> CREATE TABLE PERSON2(PERSON2_ID INT,PERSON2_NAME VARCHAR(20) DEFAULT 'ECG' ,PERSON2_AGE INT,CHECK(PERSON2_AGE>=18),PERSON2_DATE DATETIME  DEFAULT  CURRENT_TIMESTAMP);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO PERSON2(PERSON2_ID,PERSON2_AGE) VALUES (1002,56);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT* FROM PERSON2;
++------------+--------------+-------------+---------------------+
+| PERSON2_ID | PERSON2_NAME | PERSON2_AGE | PERSON2_DATE        |
++------------+--------------+-------------+---------------------+
+|       1002 | ECG          |          56 | 2025-10-12 12:13:23 |
++------------+--------------+-------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE TEACHER(TEACHER_ID INT, TEACHER_NAME VARCHAR(20) DEFAULT 'MEGH' ,TEACHER_SALARY INT, CHECK(TEACHER_SALARY>=200000), DOB DATETIME DEFAULT CURRENT_TIMESTAMP);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO TEACHER(TEACHER_ID,TEACHER_SALARY) VALUES (20006,30000000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO TEACHER(TEACHER_ID,TEACHER_SALARY) VALUES (20006,3000);
+ERROR 3819 (HY000): Check constraint 'teacher_chk_1' is violated.
+mysql> INSERT INTO TEACHER(TEACHER_ID,TEACHER_SALARY) VALUES (2076,80000000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO TEACHER(TEACHER_ID,TEACHER_SALARY) VALUES (2776,90000000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT* FROM TEACHER;
++------------+--------------+----------------+---------------------+
+| TEACHER_ID | TEACHER_NAME | TEACHER_SALARY | DOB                 |
++------------+--------------+----------------+---------------------+
+|      20006 | MEGH         |       30000000 | 2025-10-12 12:17:15 |
+|       2076 | MEGH         |       80000000 | 2025-10-12 12:18:18 |
+|       2776 | MEGH         |       90000000 | 2025-10-12 12:18:29 |
++------------+--------------+----------------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> 	notee
