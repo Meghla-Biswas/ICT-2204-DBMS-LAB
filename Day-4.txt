@@ -1,0 +1,267 @@
+
+mysql> CREATE DATABASE MEGH;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE MEGH;
+Database changed
+mysql>  CREATE TABLE STU(ROLL INT, NAME VARCHAR(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO STU(ROLL,NAME) VALUES(2006,'MEGHLA');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM STU;
++------+--------+
+| ROLL | NAME   |
++------+--------+
+| 2006 | MEGHLA |
++------+--------+
+1 row in set (0.00 sec)
+
+mysql> DESC STU;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ROLL  | int         | YES  |     | NULL    |       |
+| NAME  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> TRUNCATE TABLE STU;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SELECT*FROM STU;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO STU(ROLL,NAME) VALUES(2006,'MEGHLA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM STU;
++------+--------+
+| ROLL | NAME   |
++------+--------+
+| 2006 | MEGHLA |
++------+--------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO STU VALUES(200777,'HFDUYR');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM STU;
++--------+--------+
+| ROLL   | NAME   |
++--------+--------+
+|   2006 | MEGHLA |
+|   2006 | MEGHLA |
+| 200777 | HFDUYR |
++--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO STU(ROLL,NAME) VALUES(1,'SMITA'),(2,'MITA'),(3,'SADIKA'),(4,'NIPA');
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM STU;
++--------+--------+
+| ROLL   | NAME   |
++--------+--------+
+|   2006 | MEGHLA |
+|   2006 | MEGHLA |
+| 200777 | HFDUYR |
+|      1 | SMITA  |
+|      2 | MITA   |
+|      3 | SADIKA |
+|      4 | NIPA   |
++--------+--------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO STU VALUES(1,'SMITA'),(2,'MITA'),(3,'SADIKA'),(4,'NIPA');
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM STU;
++--------+--------+
+| ROLL   | NAME   |
++--------+--------+
+|   2006 | MEGHLA |
+|   2006 | MEGHLA |
+| 200777 | HFDUYR |
+|      1 | SMITA  |
+|      2 | MITA   |
+|      3 | SADIKA |
+|      4 | NIPA   |
+|      1 | SMITA  |
+|      2 | MITA   |
+|      3 | SADIKA |
+|      4 | NIPA   |
++--------+--------+
+11 rows in set (0.00 sec)
+
+mysql> DELETE FROM STU;
+Query OK, 11 rows affected (0.01 sec)
+
+mysql> SELECT*FROM STU;
+Empty set (0.00 sec)
+
+mysql> DESC STU;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ROLL  | int         | YES  |     | NULL    |       |
+| NAME  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO STU VALUES(1,'SMITA'),(2,'MITA'),(3,'SADIKA'),(4,'NIPA');
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM STU;
++------+--------+
+| ROLL | NAME   |
++------+--------+
+|    1 | SMITA  |
+|    2 | MITA   |
+|    3 | SADIKA |
+|    4 | NIPA   |
++------+--------+
+4 rows in set (0.00 sec)
+
+mysql> DELETE FROM STU WHERE NAME='SADIKA';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM STU;
++------+-------+
+| ROLL | NAME  |
++------+-------+
+|    1 | SMITA |
+|    2 | MITA  |
+|    4 | NIPA  |
++------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT ROLL FROM STU;
++------+
+| ROLL |
++------+
+|    1 |
+|    2 |
+|    4 |
++------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT  NAME,ROLL FROM STU;
++-------+------+
+| NAME  | ROLL |
++-------+------+
+| SMITA |    1 |
+| MITA  |    2 |
+| NIPA  |    4 |
++-------+------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT  NAME,ROLL FROM STU INTO OUTFILE 'C:\ICT-2204,DBMS LAB\Test.txt';
+ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+mysql> UPDATE STU SET NAME='KABITA' WHERE ROLL=4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT* FROM STU;
++------+--------+
+| ROLL | NAME   |
++------+--------+
+|    1 | SMITA  |
+|    2 | MITA   |
+|    4 | KABITA |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE STU SET NAME='KABITA';
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 3  Changed: 2  Warnings: 0
+
+mysql> SELECT* FROM STU;
++------+--------+
+| ROLL | NAME   |
++------+--------+
+|    1 | KABITA |
+|    2 | KABITA |
+|    4 | KABITA |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE STU SET ROLL=3 WHERE NAME='KABITA';
+Query OK, 3 rows affected (0.00 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> SELECT* FROM STU;
++------+--------+
+| ROLL | NAME   |
++------+--------+
+|    3 | KABITA |
+|    3 | KABITA |
+|    3 | KABITA |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  INSERT INTO STU VALUES(1,'SMITA'),(2,'MITA'),(3,'SADIKA');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT* FROM STU;
++------+--------+
+| ROLL | NAME   |
++------+--------+
+|    3 | KABITA |
+|    3 | KABITA |
+|    3 | KABITA |
+|    1 | SMITA  |
+|    2 | MITA   |
+|    3 | SADIKA |
++------+--------+
+6 rows in set (0.00 sec)
+
+mysql> DELETE FROM STU WHERE NAME='KABITA';
+Query OK, 3 rows affected (0.00 sec)
+
+mysql> SELECT* FROM STU;
++------+--------+
+| ROLL | NAME   |
++------+--------+
+|    1 | SMITA  |
+|    2 | MITA   |
+|    3 | SADIKA |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE STU SET ROLL=3, NAME=KABITA WHERE NAME='SADIKA';
+ERROR 1054 (42S22): Unknown column 'KABITA' in 'field list'
+mysql> UPDATE STU SET ROLL=3, NAME='KABITA' WHERE NAME='SADIKA';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT* FROM STU;
++------+--------+
+| ROLL | NAME   |
++------+--------+
+|    1 | SMITA  |
+|    2 | MITA   |
+|    3 | KABITA |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE STU SET ROLL=5, NAME='KABAB' WHERE NAME='KABITA';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT* FROM STU;
++------+-------+
+| ROLL | NAME  |
++------+-------+
+|    1 | SMITA |
+|    2 | MITA  |
+|    5 | KABAB |
++------+-------+
+3 rows in set (0.00 sec)
+
+mysql> notee;
