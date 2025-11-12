@@ -1,0 +1,476 @@
+
+mysql> use MEGH
+Database changed
+
+mysql> SHOE TABLES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SHOE TABLES' at line 1
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_megh |
++----------------+
+| stu            |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> DESC STU;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ROLL  | int         | YES  |     | NULL    |       |
+| NAME  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STU ADD AGE INT;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STU;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ROLL  | int         | YES  |     | NULL    |       |
+| NAME  | varchar(20) | YES  |     | NULL    |       |
+| AGE   | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *FROM STU;
++------+-------+------+
+| ROLL | NAME  | AGE  |
++------+-------+------+
+|    1 | SMITA | NULL |
+|    2 | MITA  | NULL |
+|    5 | KABAB | NULL |
++------+-------+------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE STU SET AGE=22 WHERE NAME='SMITA';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM STU;
++------+-------+------+
+| ROLL | NAME  | AGE  |
++------+-------+------+
+|    1 | SMITA |   22 |
+|    2 | MITA  | NULL |
+|    5 | KABAB | NULL |
++------+-------+------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE STU SET AGE=20 WHERE NAME='MITA';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE STU SET AGE=23 WHERE NAME='KABAB';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM STU;
++------+-------+------+
+| ROLL | NAME  | AGE  |
++------+-------+------+
+|    1 | SMITA |   22 |
+|    2 | MITA  |   20 |
+|    5 | KABAB |   23 |
++------+-------+------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STU DROP COLUMN ROLL;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM STU;
++-------+------+
+| NAME  | AGE  |
++-------+------+
+| SMITA |   22 |
+| MITA  |   20 |
+| KABAB |   23 |
++-------+------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STU ADD CONSTRAINT pk_age PRIMARY KEY(AGE);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STU;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| NAME  | varchar(20) | YES  |     | NULL    |       |
+| AGE   | int         | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE TEACHER(TECH_NAME VARCHAR(20),TECH_AGE INT);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO TEACHER VALUES('MEHERIN',35),('KAISAR', 40);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM TEACHER;
++-----------+----------+
+| TECH_NAME | TECH_AGE |
++-----------+----------+
+| MEHERIN   |       35 |
+| KAISAR    |       40 |
++-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE TEACHER ADD CONSTRAINT pk_tech_age  PRIMARY KEY(TECH_AGE);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE TEACHER ADD COLUMN AGE INT REFERENCES STU(AGE);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM TEACHER;
++-----------+----------+------+
+| TECH_NAME | TECH_AGE | AGE  |
++-----------+----------+------+
+| MEHERIN   |       35 | NULL |
+| KAISAR    |       40 | NULL |
++-----------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> DESC TEACHER;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TECH_NAME | varchar(20) | YES  |     | NULL    |       |
+| TECH_AGE  | int         | NO   | PRI | NULL    |       |
+| AGE       | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STU ADD STU_ID INT, ADD CONSTRAINT pk_stu_id PRIMARY KEY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> ALTER TABLE TEACHER ADD CONSTRAINT fk_age FOREIGN KEY (AGE) REFERENCES STU(AGE);
+Query OK, 2 rows affected (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> DESC TEACHER;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TECH_NAME | varchar(20) | YES  |     | NULL    |       |
+| TECH_AGE  | int         | NO   | PRI | NULL    |       |
+| AGE       | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE TEACHER SET AGE=22 WHERE TECH_NAME='MEHERIN';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> DESC TEACHER;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TECH_NAME | varchar(20) | YES  |     | NULL    |       |
+| TECH_AGE  | int         | NO   | PRI | NULL    |       |
+| AGE       | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TEACHER;
++-----------+----------+------+
+| TECH_NAME | TECH_AGE | AGE  |
++-----------+----------+------+
+| MEHERIN   |       35 |   22 |
+| KAISAR    |       40 | NULL |
++-----------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> UPDATE TEACHER SET AGE=25 WHERE TECH_NAME='MEHERIN';
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`megh`.`teacher`, CONSTRAINT `fk_age` FOREIGN KEY (`AGE`) REFERENCES `stu` (`AGE`))
+mysql> UPDATE TEACHER SET AGE=20 WHERE TECH_NAME='KAISAR';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM TEACHER;
++-----------+----------+------+
+| TECH_NAME | TECH_AGE | AGE  |
++-----------+----------+------+
+| MEHERIN   |       35 |   22 |
+| KAISAR    |       40 |   20 |
++-----------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STU;
++-------+-----+
+| NAME  | AGE |
++-------+-----+
+| MITA  |  20 |
+| SMITA |  22 |
+| KABAB |  23 |
++-------+-----+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE TEACHER ADD COLUMN TECH_FAMILY INT PRIMARY KEY;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> ALTER TABLE STU ADD COLUMN STU_FAMILY INT PRIMARY KEY;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> DESC STU;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| NAME  | varchar(20) | YES  |     | NULL    |       |
+| AGE   | int         | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE TEACHER DROP CONSTRAINT PRIMARY KEY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'PRIMARY KEY' at line 1
+mysql> ALTER TABLE TEACHER DROP CONSTRAINT ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> ALTER TABLE TEACHER DROP TECH_AGE; 
+Query OK, 2 rows affected (0.07 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+
+| TECH_NAME | AGE  |
++-----------+------+
+| MEHERIN   |   22 |
+| KAISAR    |   20 |
++-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STU ADD COLUMN STU_ID INT PRIMARY KEY;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> ALTER TABLE TEACHER ADD COLUMN TECH_ID INT PRIMARY KEY;
+ERROR 1062 (23000): Duplicate entry '0' for key 'teacher.PRIMARY'
+mysql> DESC TEACHER;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TECH_NAME | varchar(20) | YES  |     | NULL    |       |
+| AGE       | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+
+| TECH_NAME | AGE  |
++-----------+------+
+| MEHERIN   |   22 |
+| KAISAR    |   20 |
++-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE TEACHER ADD COLUMN TECH_ID INT , ADD CONSTRAINT pk_TECH_ID  PRIMARY KEY(TECH_ID);
+ERROR 1062 (23000): Duplicate entry '0' for key 'teacher.PRIMARY'
+mysql> DESC TEACHER;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TECH_NAME | varchar(20) | YES  |     | NULL    |       |
+| AGE       | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESC STU;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| NAME  | varchar(20) | YES  |     | NULL    |       |
+| AGE   | int         | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STU;
++-------+-----+
+| NAME  | AGE |
++-------+-----+
+| MITA  |  20 |
+| SMITA |  22 |
+| KABAB |  23 |
++-------+-----+
+3 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+
+| TECH_NAME | AGE  |
++-----------+------+
+| MEHERIN   |   22 |
+| KAISAR    |   20 |
++-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE TEACHER ADD COLUMN TECH_ID INT , ADD CONSTRAINT pk_TECH_ID  PRIMARY KEY(TECH_ID);
+ERROR 1062 (23000): Duplicate entry '0' for key 'teacher.PRIMARY'
+mysql> ALTER TABLE TEACHER ADD COLUMN TECH_ID INT PRIMARY KEY;
+ERROR 1062 (23000): Duplicate entry '0' for key 'teacher.PRIMARY'
+mysql> CREATE TABLE TEST(NAME VARCHAR(20), TEST_ID INT);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO TEST VALUES('ABC',44),('EFG',55);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+---------+
+| NAME | TEST_ID |
++------+---------+
+| ABC  |      44 |
+| EFG  |      55 |
++------+---------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE TEST ADD COLUMN AGE INT PRIMARY KEY;
+ERROR 1062 (23000): Duplicate entry '0' for key 'test.PRIMARY'
+mysql> ALTER TABLE TEST ADD COLUMN TEST_AGE INT PRIMARY KEY;
+ERROR 1062 (23000): Duplicate entry '0' for key 'test.PRIMARY'
+mysql> ALTER TABLE TEST ADD COLUMN TEST_ID INT , ADD CONSTRAINT pk_TEST_ID  PRIMARY KEY(TEST_ID);
+ERROR 1060 (42S21): Duplicate column name 'TEST_ID'
+mysql> SELECT*FROM TEST;
++------+---------+
+| NAME | TEST_ID |
++------+---------+
+| ABC  |      44 |
+| EFG  |      55 |
++------+---------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE TEST ADD COLUMN TEST_AGE INT PRIMARY KEY;
+ERROR 1062 (23000): Duplicate entry '0' for key 'test.PRIMARY'
+mysql> DELETE FROM TEST WHERE TEST_ID=55;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> ALTER TABLE TEST ADD COLUMN TEST_AGE INT PRIMARY KEY;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+---------+----------+
+| NAME | TEST_ID | TEST_AGE |
++------+---------+----------+
+| ABC  |      44 |        0 |
++------+---------+----------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE TEST ADD COLUMN TEST_FAN INT PRIMARY KEY;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> ALTER TABLE TEST ADD CONSTRAINT fk_test_id PRIMARY KEY (NAME,TEST_ID);
+ERROR 1068 (42000): Multiple primary key defined
+mysql> DROP TABLE TEST;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE TEST(NAME VARCHAR(20), ID INT);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO TEST VALUES('MEGH',2006),('SMI',2007);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+------+
+| NAME | ID   |
++------+------+
+| MEGH | 2006 |
+| SMI  | 2007 |
++------+------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE TEST ADD CONSTRAINT fk_id_name PRIMARY(NAME,ID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(NAME,ID)' at line 1
+mysql> ALTER TABLE TEST ADD CONSTRAINT fk_id_name PRIMARY KEY(NAME,ID);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC TEST;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| NAME  | varchar(20) | NO   | PRI | NULL    |       |
+| ID    | int         | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT NAME,ID,NAME,AGE FROM TEST,STU;
+ERROR 1052 (23000): Column 'NAME' in field list is ambiguous
+mysql> SELECT NAME,ID,TECH_NAME,AGE FROM TEST,TEACHER;
++------+------+-----------+------+
+| NAME | ID   | TECH_NAME | AGE  |
++------+------+-----------+------+
+| SMI  | 2007 | MEHERIN   |   22 |
+| MEGH | 2006 | MEHERIN   |   22 |
+| SMI  | 2007 | KAISAR    |   20 |
+| MEGH | 2006 | KAISAR    |   20 |
++------+------+-----------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT t.NAME,ID,s.NAME,AGE FROM TEST as t,STU as s;
++------+------+-------+-----+
+| NAME | ID   | NAME  | AGE |
++------+------+-------+-----+
+| SMI  | 2007 | MITA  |  20 |
+| MEGH | 2006 | MITA  |  20 |
+| SMI  | 2007 | SMITA |  22 |
+| MEGH | 2006 | SMITA |  22 |
+| SMI  | 2007 | KABAB |  23 |
+| MEGH | 2006 | KABAB |  23 |
++------+------+-------+-----+
+6 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TEST;
++------+------+
+| NAME | ID   |
++------+------+
+| MEGH | 2006 |
+| SMI  | 2007 |
++------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STU;
++-------+-----+
+| NAME  | AGE |
++-------+-----+
+| MITA  |  20 |
+| SMITA |  22 |
+| KABAB |  23 |
++-------+-----+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO STU(NAME,AGE) SELECT TEST_ID,TEST_AGE FROM TEST;
+ERROR 1054 (42S22): Unknown column 'TEST_ID' in 'field list'
+mysql> CREATE TABLE HALL(HALL_ID INT. HALL_NAME VARCHAR(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '. HALL_NAME VARCHAR(30))' at line 1
+mysql> CREATE TABLE HALL(HALL_ID INT, HALL_NAME VARCHAR(30));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO HALL VALUES(2,'PRITILATA'),(3,'JAHANARA');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM HALL;
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
+|       3 | JAHANARA  |
++---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE COURSE(COURSE_ID INT,COURSE_NAME VARCHAR(30));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO COURSE (COURSE_ID,COURSE_NAME) SELECT HALL_ID,HALL_NAME FROM HALL;
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM COURSE;
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | PRITILATA   |
+|         3 | JAHANARA    |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> notee;
