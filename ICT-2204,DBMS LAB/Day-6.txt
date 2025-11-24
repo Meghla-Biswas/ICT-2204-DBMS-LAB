@@ -1,0 +1,662 @@
+mysql> CREATE DATABASE MEGHLA;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE MEGHLA;
+Database changed
+mysql> USE MEGH;
+Database changed
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| iit                |
+| iit14thbatch       |
+| information_schema |
+| lab_quiz_01_1994   |
+| megh               |
+| meghla             |
+| mysql              |
+| performance_schema |
+| practice           |
+| sys                |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_megh |
++----------------+
+| course         |
+| hall           |
+| stu            |
+| teacher        |
+| test           |
++----------------+
+5 rows in set (0.00 sec)
+
+mysql> DESC COURSE;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| COURSE_ID   | int         | YES  |     | NULL    |       |
+| COURSE_NAME | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESC HALL;\
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| HALL_ID   | int         | YES  |     | NULL    |       |
+| HALL_NAME | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT COURSE_ID FROM COURSE UNION SELECT HALL_ID FROM HALL;
++-----------+
+| COURSE_ID |
++-----------+
+|         2 |
+|         3 |
++-----------+
+2 rows in set (0.02 sec)
+
+mysql> SELECT*FROM COURSE;
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | PRITILATA   |
+|         3 | JAHANARA    |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM HALL;
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
+|       3 | JAHANARA  |
++---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT COURSE_NAME FROM COURSE UNION SELECT HALL_ID FROM HALL;
++-------------+
+| COURSE_NAME |
++-------------+
+| PRITILATA   |
+| JAHANARA    |
+| 2           |
+| 3           |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COURSE_NAME ,COURSE_ID FROM COURSE UNION SELECT*FROM HALL;
++-------------+-----------+
+| COURSE_NAME | COURSE_ID |
++-------------+-----------+
+| PRITILATA   | 2         |
+| JAHANARA    | 3         |
+| 2           | PRITILATA |
+| 3           | JAHANARA  |
++-------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STU;
++-------+-----+
+| NAME  | AGE |
++-------+-----+
+| MITA  |  20 |
+| SMITA |  22 |
+| KABAB |  23 |
++-------+-----+
+3 rows in set (0.01 sec)
+
+mysql> SELECT COURSE_NAME ,COURSE_ID FROM COURSE UNION SELECT*FROM STU;
++-------------+-----------+
+| COURSE_NAME | COURSE_ID |
++-------------+-----------+
+| PRITILATA   |         2 |
+| JAHANARA    |         3 |
+| MITA        |        20 |
+| SMITA       |        22 |
+| KABAB       |        23 |
++-------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> DESC TEACHER;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TECH_NAME | varchar(20) | YES  |     | NULL    |       |
+| AGE       | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT* FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA= 'MEGH';
++--------------------+-------------------+-----------------+---------------------------+--------------------------+------------------------+--------------+-------------+-------------+------------+-----------------------+
+| CONSTRAINT_CATALOG | CONSTRAINT_SCHEMA | CONSTRAINT_NAME | UNIQUE_CONSTRAINT_CATALOG | UNIQUE_CONSTRAINT_SCHEMA | UNIQUE_CONSTRAINT_NAME | MATCH_OPTION | UPDATE_RULE | DELETE_RULE | TABLE_NAME | REFERENCED_TABLE_NAME |
++--------------------+-------------------+-----------------+---------------------------+--------------------------+------------------------+--------------+-------------+-------------+------------+-----------------------+
+| def                | megh              | fk_age          | def                       | megh                     | PRIMARY                | NONE         | NO ACTION   | NO ACTION   | teacher    | stu                   |
++--------------------+-------------------+-----------------+---------------------------+--------------------------+------------------------+--------------+-------------+-------------+------------+-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SHOW INDEXES IN TEACHER;
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| teacher |          1 | fk_age   |            1 | AGE         | A         |           2 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+
+| TECH_NAME | AGE  |
++-----------+------+
+| MEHERIN   |   22 |
+| KAISAR    |   20 |
++-----------+------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT AVG(AGE) FROM TEACHER;
++----------+
+| AVG(AGE) |
++----------+
+|  21.0000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(TECH_NAME) FROM TEACHER;
++----------------+
+| AVG(TECH_NAME) |
++----------------+
+|              0 |
++----------------+
+1 row in set, 2 warnings (0.00 sec)
+
+mysql> SELECT COUNT(AGE) FROM TEACHER;
++------------+
+| COUNT(AGE) |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(AGE) FROM TEACHER;
++----------+
+| SUM(AGE) |
++----------+
+|       42 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(AGE) FROM TEACHER;
++----------+
+| MIN(AGE) |
++----------+
+|       20 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(AGE) FROM TEACHER;
++----------+
+| MAX(AGE) |
++----------+
+|       22 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO TEACHER VALUES('MEGH',34),('SMI',40);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`megh`.`teacher`, CONSTRAINT `fk_age` FOREIGN KEY (`AGE`) REFERENCES `stu` (`AGE`))
+mysql> INSERT INTO TEACHER(TECH_NAME,AGE) VALUES('MEGH',34),('SMI',40);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`megh`.`teacher`, CONSTRAINT `fk_age` FOREIGN KEY (`AGE`) REFERENCES `stu` (`AGE`))
+mysql> SELECT AVG(AGE) FROM TEACHER WHERE AGE>20;
++----------+
+| AVG(AGE) |
++----------+
+|  22.0000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(AGE) FROM TEACHER WHERE AGE>20;
++------------+
+| COUNT(AGE) |
++------------+
+|          1 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(AGE) FROM TEACHER WHERE AGE>20;
++----------+
+| MAX(AGE) |
++----------+
+|       22 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM STU;
++-------+-----+
+| NAME  | AGE |
++-------+-----+
+| MITA  |  20 |
+| SMITA |  22 |
+| KABAB |  23 |
++-------+-----+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO TEACHER(TECH_NAME,AGE) VALUES('MEGH',23);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT MAX(AGE) FROM TEACHER WHERE AGE>20;
++----------+
+| MAX(AGE) |
++----------+
+|       23 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+
+| TECH_NAME | AGE  |
++-----------+------+
+| MEHERIN   |   22 |
+| KAISAR    |   20 |
+| MEGH      |   23 |
++-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT AVG(AGE) FROM TEACHER WHERE AGE>20;
++----------+
+| AVG(AGE) |
++----------+
+|  22.5000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(AGE) FROM TEACHER WHERE AGE>20;
++------------+
+| COUNT(AGE) |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> DESC TEACHER;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TECH_NAME | varchar(20) | YES  |     | NULL    |       |
+| AGE       | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SHOW INDEXES IN TEACHER;
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| teacher |          1 | fk_age   |            1 | AGE         | A         |           2 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE  TEACHER DROP FOREIGN KEY fk_age;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC TEACHER;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TECH_NAME | varchar(20) | YES  |     | NULL    |       |
+| AGE       | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE  TEACHER DROP FOREIGN KEY fk_age;
+ERROR 1091 (42000): Can't DROP 'fk_age'; check that column/key exists
+mysql> ALTER TABLE  STU DROP PRIMARY KEY ;
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO TEACHER VALUES('MEGHLA',30);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO TEACHER VALUES('SMITA',20),('MITA',22);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+
+| TECH_NAME | AGE  |
++-----------+------+
+| MEHERIN   |   22 |
+| KAISAR    |   20 |
+| MEGH      |   23 |
+| MEGHLA    |   30 |
+| SMITA     |   20 |
+| MITA      |   22 |
++-----------+------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE TEACHER SET AGE=33 WHERE AGE=30;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+
+| TECH_NAME | AGE  |
++-----------+------+
+| MEHERIN   |   22 |
+| KAISAR    |   20 |
+| MEGH      |   23 |
+| MEGHLA    |   33 |
+| SMITA     |   20 |
+| MITA      |   22 |
++-----------+------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO TEACHER(TECH_NAME) VALUES('GITTA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+
+| TECH_NAME | AGE  |
++-----------+------+
+| MEHERIN   |   22 |
+| KAISAR    |   20 |
+| MEGH      |   23 |
+| MEGHLA    |   33 |
+| SMITA     |   20 |
+| MITA      |   22 |
+| GITTA     | NULL |
++-----------+------+
+7 rows in set (0.00 sec)
+
+mysql> UPDATE  TEACHER  SET AGE=45 WHERE AGE IS NULL;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+
+| TECH_NAME | AGE  |
++-----------+------+
+| MEHERIN   |   22 |
+| KAISAR    |   20 |
+| MEGH      |   23 |
+| MEGHLA    |   33 |
+| SMITA     |   20 |
+| MITA      |   22 |
+| GITTA     |   45 |
++-----------+------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(DISTINCT AGE) FROM TEACHER;
++---------------------+
+| COUNT(DISTINCT AGE) |
++---------------------+
+|                   5 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE TEACHER ADD COLUMN TECH_CODE INT;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO TEACHER(TECH_CODE) VALUES(1),(2),(3),(4),(5),(6),(7);
+Query OK, 7 rows affected (0.00 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+-----------+
+| TECH_NAME | AGE  | TECH_CODE |
++-----------+------+-----------+
+| MEHERIN   |   22 |      NULL |
+| KAISAR    |   20 |      NULL |
+| MEGH      |   23 |      NULL |
+| MEGHLA    |   33 |      NULL |
+| SMITA     |   20 |      NULL |
+| MITA      |   22 |      NULL |
+| GITTA     |   45 |      NULL |
+| NULL      | NULL |         1 |
+| NULL      | NULL |         2 |
+| NULL      | NULL |         3 |
+| NULL      | NULL |         4 |
+| NULL      | NULL |         5 |
+| NULL      | NULL |         6 |
+| NULL      | NULL |         7 |
++-----------+------+-----------+
+14 rows in set (0.00 sec)
+
+mysql> ALTER TABLE DROP TECH_CODE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TECH_CODE' at line 1
+mysql> ALTER TABLE TEACHER DROP TECH_CODE;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE TEACHER ADD COLUMN TECH_CODE INT;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE TEACHER SET TECH_CODE=1 WHERE AGE=22;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> UPDATE TEACHER SET TECH_CODE=1 WHERE AGE=20;
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> UPDATE TEACHER SET TECH_CODE=2 WHERE AGE=23;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE TEACHER SET TECH_CODE=3 WHERE AGE=33;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE TEACHER SET TECH_CODE=3 WHERE AGE=20;
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+-----------+
+| TECH_NAME | AGE  | TECH_CODE |
++-----------+------+-----------+
+| MEHERIN   |   22 |         1 |
+| KAISAR    |   20 |         3 |
+| MEGH      |   23 |         2 |
+| MEGHLA    |   33 |         3 |
+| SMITA     |   20 |         3 |
+| MITA      |   22 |         1 |
+| GITTA     |   45 |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
++-----------+------+-----------+
+14 rows in set (0.00 sec)
+
+mysql> UPDATE TEACHER SET TECH_CODE=5 WHERE AGE=45;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+-----------+
+| TECH_NAME | AGE  | TECH_CODE |
++-----------+------+-----------+
+| MEHERIN   |   22 |         1 |
+| KAISAR    |   20 |         3 |
+| MEGH      |   23 |         2 |
+| MEGHLA    |   33 |         3 |
+| SMITA     |   20 |         3 |
+| MITA      |   22 |         1 |
+| GITTA     |   45 |         5 |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
++-----------+------+-----------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT AGE,COUNT(TECH_CODE) FROM TEACHER GROUP BY AGE;
++------+------------------+
+| AGE  | COUNT(TECH_CODE) |
++------+------------------+
+| NULL |                0 |
+|   20 |                2 |
+|   22 |                2 |
+|   23 |                1 |
+|   33 |                1 |
+|   45 |                1 |
++------+------------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT TECH_CODE,COUNT(AGE) FROM TEACHER GROUP BY TECH_CODE;
++-----------+------------+
+| TECH_CODE | COUNT(AGE) |
++-----------+------------+
+|         1 |          2 |
+|         3 |          3 |
+|         2 |          1 |
+|         5 |          1 |
+|      NULL |          0 |
++-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(TECH_CODE) FROM TEACHER GROUP BY AGE;
++------------------+
+| COUNT(TECH_CODE) |
++------------------+
+|                0 |
+|                2 |
+|                2 |
+|                1 |
+|                1 |
+|                1 |
++------------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME;
++-----------+------------+
+| TECH_NAME | COUNT(AGE) |
++-----------+------------+
+| MEHERIN   |          1 |
+| KAISAR    |          1 |
+| MEGH      |          1 |
+| MEGHLA    |          1 |
+| SMITA     |          1 |
+| MITA      |          1 |
+| GITTA     |          1 |
+| NULL      |          0 |
++-----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME WHERE AGE>20;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE AGE>20' at line 1
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME ORDER BY TECH_NAME ASC;
++-----------+------------+
+| TECH_NAME | COUNT(AGE) |
++-----------+------------+
+| NULL      |          0 |
+| GITTA     |          1 |
+| KAISAR    |          1 |
+| MEGH      |          1 |
+| MEGHLA    |          1 |
+| MEHERIN   |          1 |
+| MITA      |          1 |
+| SMITA     |          1 |
++-----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME ORDER BY TECH_NAME DSC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DSC' at line 1
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME ORDER BY TECH_NAME DESC;
++-----------+------------+
+| TECH_NAME | COUNT(AGE) |
++-----------+------------+
+| SMITA     |          1 |
+| MITA      |          1 |
+| MEHERIN   |          1 |
+| MEGHLA    |          1 |
+| MEGH      |          1 |
+| KAISAR    |          1 |
+| GITTA     |          1 |
+| NULL      |          0 |
++-----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME ORDER BY TECH_NAME;
++-----------+------------+
+| TECH_NAME | COUNT(AGE) |
++-----------+------------+
+| NULL      |          0 |
+| GITTA     |          1 |
+| KAISAR    |          1 |
+| MEGH      |          1 |
+| MEGHLA    |          1 |
+| MEHERIN   |          1 |
+| MITA      |          1 |
+| SMITA     |          1 |
++-----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME HAVING COUNT(AGE>20) ORDER BY TECH_NAME;
++-----------+------------+
+| TECH_NAME | COUNT(AGE) |
++-----------+------------+
+| GITTA     |          1 |
+| KAISAR    |          1 |
+| MEGH      |          1 |
+| MEGHLA    |          1 |
+| MEHERIN   |          1 |
+| MITA      |          1 |
+| SMITA     |          1 |
++-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME HAVING SUM(AGE>30) ORDER BY TECH_NAME;
++-----------+------------+
+| TECH_NAME | COUNT(AGE) |
++-----------+------------+
+| GITTA     |          1 |
+| MEGHLA    |          1 |
++-----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME HAVING COUNT(AGE>30) ORDER BY TECH_NAME;
++-----------+------------+
+| TECH_NAME | COUNT(AGE) |
++-----------+------------+
+| GITTA     |          1 |
+| KAISAR    |          1 |
+| MEGH      |          1 |
+| MEGHLA    |          1 |
+| MEHERIN   |          1 |
+| MITA      |          1 |
+| SMITA     |          1 |
++-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME HAVING COUNT(AGE)>30 ORDER BY TECH_NAME;
+Empty set (0.00 sec)
+
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME HAVING COUNT(AGE)>1 ORDER BY TECH_NAME;
+Empty set (0.00 sec)
+
+mysql> SELECT TECH_NAME,COUNT(AGE) FROM TEACHER GROUP BY TECH_NAME HAVING COUNT(AGE)>=1 ORDER BY TECH_NAME;
++-----------+------------+
+| TECH_NAME | COUNT(AGE) |
++-----------+------------+
+| GITTA     |          1 |
+| KAISAR    |          1 |
+| MEGH      |          1 |
+| MEGHLA    |          1 |
+| MEHERIN   |          1 |
+| MITA      |          1 |
+| SMITA     |          1 |
++-----------+------------+
+7 rows in set (0.00 sec)
+
