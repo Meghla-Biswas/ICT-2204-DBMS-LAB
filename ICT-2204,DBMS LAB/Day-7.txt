@@ -1,0 +1,315 @@
+
+mysql> use megh;
+Database changed
+mysql> SELECT DATE("2025-11-25");
++--------------------+
+| DATE("2025-11-25") |
++--------------------+
+| 2025-11-25         |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE("2025-11-25") AS RANDOMDATE;
++------------+
+| RANDOMDATE |
++------------+
+| 2025-11-25 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2025-11-25","%Y") ;
++--------------------------------+
+| DATE_FORMAT("2025-11-25","%Y") |
++--------------------------------+
+| 2025                           |
++--------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2025-11-25","%M") ;
++--------------------------------+
+| DATE_FORMAT("2025-11-25","%M") |
++--------------------------------+
+| November                       |
++--------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2025-11-25","%D") ;
++--------------------------------+
+| DATE_FORMAT("2025-11-25","%D") |
++--------------------------------+
+| 25th                           |
++--------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATEDIFE("2025-11-25","2025-10-25") ;
+ERROR 1305 (42000): FUNCTION megh.DATEDIFE does not exist
+mysql> SELECT DATEDIFE("2025-11-25","2025-11-27") ;
+ERROR 1305 (42000): FUNCTION megh.DATEDIFE does not exist
+mysql> SELECT DATEDIFF("2025-11-25","2025-11-27") ;
++-------------------------------------+
+| DATEDIFF("2025-11-25","2025-11-27") |
++-------------------------------------+
+|                                  -2 |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATEDIFF("2025-11-25","2025-10-20") ;
++-------------------------------------+
+| DATEDIFF("2025-11-25","2025-10-20") |
++-------------------------------------+
+|                                  36 |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2025-11-25","%d") ;
++--------------------------------+
+| DATE_FORMAT("2025-11-25","%d") |
++--------------------------------+
+| 25                             |
++--------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2025-11-25","%m") ;
++--------------------------------+
+| DATE_FORMAT("2025-11-25","%m") |
++--------------------------------+
+| 11                             |
++--------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_ADD("2025-11-25",INTERVAL 10 DAY) ;
++----------------------------------------+
+| DATE_ADD("2025-11-25",INTERVAL 10 DAY) |
++----------------------------------------+
+| 2025-12-05                             |
++----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_SUB("2025-11-25",INTERVAL 10 DAY) ;
++----------------------------------------+
+| DATE_SUB("2025-11-25",INTERVAL 10 DAY) |
++----------------------------------------+
+| 2025-11-15                             |
++----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAY("2025-11-25");
++-------------------+
+| DAY("2025-11-25") |
++-------------------+
+|                25 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAY(CURDATE());
++----------------+
+| DAY(CURDATE()) |
++----------------+
+|             25 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYNAME("2025-11-25") ;
++-----------------------+
+| DAYNAME("2025-11-25") |
++-----------------------+
+| Tuesday               |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYOFMONTH("2025-11-25");
++--------------------------+
+| DAYOFMONTH("2025-11-25") |
++--------------------------+
+|                       25 |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYOFMONTH(CURDATE());
++-----------------------+
+| DAYOFMONTH(CURDATE()) |
++-----------------------+
+|                    25 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYOFWEEK(CURDATE());
++----------------------+
+| DAYOFWEEK(CURDATE()) |
++----------------------+
+|                    3 |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYOFYEAR(CURDATE());
++----------------------+
+| DAYOFYEAR(CURDATE()) |
++----------------------+
+|                  329 |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SYSDATE();
++---------------------+
+| SYSDATE()           |
++---------------------+
+| 2025-11-25 12:35:39 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SYSDATE()+1;
++----------------+
+| SYSDATE()+1    |
++----------------+
+| 20251125123622 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT (SYSDATE()+1);
++----------------+
+| (SYSDATE()+1)  |
++----------------+
+| 20251125123821 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LENGTH("MEGHLA");
++------------------+
+| LENGTH("MEGHLA") |
++------------------+
+|                6 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT INSTR("MEGHLALA","A");
++-----------------------+
+| INSTR("MEGHLALA","A") |
++-----------------------+
+|                     6 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LCASE("MEGHLA");
++-----------------+
+| LCASE("MEGHLA") |
++-----------------+
+| meghla          |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT UCASE("MEGHLA");
++-----------------+
+| UCASE("MEGHLA") |
++-----------------+
+| MEGHLA          |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUBSTR("MEGHLALA","5,6");
++--------------------------+
+| SUBSTR("MEGHLALA","5,6") |
++--------------------------+
+| LALA                     |
++--------------------------+
+1 row in set, 2 warnings (0.00 sec)
+
+mysql> SELECT SUBSTR("MEGHLALA",5,6);
++------------------------+
+| SUBSTR("MEGHLALA",5,6) |
++------------------------+
+| LALA                   |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUBSTR("MEGHLALA",2,3);
++------------------------+
+| SUBSTR("MEGHLALA",2,3) |
++------------------------+
+| EGH                    |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LPAD("MEGHLALA",12,'$');
++-------------------------+
+| LPAD("MEGHLALA",12,'$') |
++-------------------------+
+| $$$$MEGHLALA            |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LPAD("MEGHLALA",7,'M');
++------------------------+
+| LPAD("MEGHLALA",7,'M') |
++------------------------+
+| MEGHLAL                |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LPAD("MEGHLALA",9,'M');
++------------------------+
+| LPAD("MEGHLALA",9,'M') |
++------------------------+
+| MMEGHLALA              |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT RPAD("MEGHLALA",10,'LA');
++--------------------------+
+| RPAD("MEGHLALA",10,'LA') |
++--------------------------+
+| MEGHLALALA               |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE TEST ADD  COLUMN SALARY INT;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| MEGH | 2006 |   NULL |
+| SMI  | 2007 |   NULL |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> UPDATE TEST SET SALARY=5000 WHERE NAME='MEGH';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE TEST SET SALARY=6000 WHERE NAME='SMI';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| MEGH | 2006 |   5000 |
+| SMI  | 2007 |   6000 |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT NAME,CONVERT(SALARY,CHAR)SALARY FROM TEST;
++------+--------+
+| NAME | SALARY |
++------+--------+
+| MEGH | 5000   |
+| SMI  | 6000   |
++------+--------+
+2 rows in set (0.00 sec)
+
+mysql> DESC SALARY;
+ERROR 1146 (42S02): Table 'megh.salary' doesn't exist
+mysql> DESC TEST;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| NAME   | varchar(20) | NO   | PRI | NULL    |       |
+| ID     | int         | NO   | PRI | NULL    |       |
+| SALARY | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> Terminal close -- exit!
