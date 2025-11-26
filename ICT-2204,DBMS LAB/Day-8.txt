@@ -1,0 +1,591 @@
+mysql> use megh;
+Database changed
+mysql> SELECT*FROM TEST;
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| MEGH | 2006 |   5000 |
+| SMI  | 2007 |   6000 |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO TEST VALUES('ABC',2008,7000),('CDF',2009,8000);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| ABC  | 2008 |   7000 |
+| CDF  | 2009 |   8000 |
+| MEGH | 2006 |   5000 |
+| SMI  | 2007 |   6000 |
++------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT NAME ,CONVERT(SALARY,CHAR) SALARY FROM TEST;
++------+--------+
+| NAME | SALARY |
++------+--------+
+| ABC  | 7000   |
+| CDF  | 8000   |
+| MEGH | 5000   |
+| SMI  | 6000   |
++------+--------+
+4 rows in set (0.00 sec)
+
+mysql> DESC TEST;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| NAME   | varchar(20) | NO   | PRI | NULL    |       |
+| ID     | int         | NO   | PRI | NULL    |       |
+| SALARY | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT CONVERT(SALARY,CHAR) SALARY FROM TEST;
++--------+
+| SALARY |
++--------+
+| 7000   |
+| 8000   |
+| 5000   |
+| 6000   |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CONVERT("2025-11-26",DATE);
++----------------------------+
+| CONVERT("2025-11-26",DATE) |
++----------------------------+
+| 2025-11-26                 |
++----------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT CONVERT(SALARY,DECIMAL(12.2)) SALARY FROM TEST;
++--------+
+| SALARY |
++--------+
+|   7000 |
+|   8000 |
+|   5000 |
+|   6000 |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CONVERT(SALARY,DECIMAL(12,2)) SALARY FROM TEST;
++---------+
+| SALARY  |
++---------+
+| 7000.00 |
+| 8000.00 |
+| 5000.00 |
+| 6000.00 |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CONVERT(SALARY,DECIMAL(8,2)) SALARY FROM TEST;
++---------+
+| SALARY  |
++---------+
+| 7000.00 |
+| 8000.00 |
+| 5000.00 |
+| 6000.00 |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CONVERT(SALARY,DECIMAL(6,2)) SALARY FROM TEST;
++---------+
+| SALARY  |
++---------+
+| 7000.00 |
+| 8000.00 |
+| 5000.00 |
+| 6000.00 |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CONVERT(SALARY,DECIMAL(5,2)) SALARY FROM TEST;
++--------+
+| SALARY |
++--------+
+| 999.99 |
+| 999.99 |
+| 999.99 |
+| 999.99 |
++--------+
+4 rows in set, 4 warnings (0.00 sec)
+
+mysql>  SELECT ABD(-15);
+ERROR 1305 (42000): FUNCTION megh.ABD does not exist
+mysql>  SELECT ABS(-15);
++----------+
+| ABS(-15) |
++----------+
+|       15 |
++----------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT MOD(8,5);
++----------+
+| MOD(8,5) |
++----------+
+|        3 |
++----------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT FLOOR(7.6);
++------------+
+| FLOOR(7.6) |
++------------+
+|          7 |
++------------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT CEIL(7.6);
++-----------+
+| CEIL(7.6) |
++-----------+
+|         8 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT POWER(7,6);
++------------+
+| POWER(7,6) |
++------------+
+|     117649 |
++------------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT ROUND(7.6);
++------------+
+| ROUND(7.6) |
++------------+
+|          8 |
++------------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT SQRT(7.6);
++-------------------+
+| SQRT(7.6)         |
++-------------------+
+| 2.756809750418044 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT SQRT(7);
++--------------------+
+| SQRT(7)            |
++--------------------+
+| 2.6457513110645907 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  SALARY> ALL(SELECT SALARY FROM TEST WHERE ID>2007);
+Empty set (0.00 sec)
+
+mysql> SELECT SALARY FROM TEST WHERE ID>2007);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> SELECT SALARY FROM TEST WHERE ID>2007;
++--------+
+| SALARY |
++--------+
+|   7000 |
+|   8000 |
++--------+
+2 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  SALARY> ALL(SELECT SALARY FROM TEST WHERE ID>2006);
+Empty set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  SALARY> ALL(SELECT SALARY FROM TEST WHERE ID=2006);
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| ABC  | 2008 |   7000 |
+| CDF  | 2009 |   8000 |
+| SMI  | 2007 |   6000 |
++------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  SALARY> ALL(SELECT SALARY FROM TEST WHERE ID>2007);
+Empty set (0.00 sec)
+
+mysql> 
+mysql> 
+mysql>  SELECT * FROM TEST WHERE  SALARY> ALL(SELECT SALARY FROM TEST WHERE ID>2007);
+Empty set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  SALARY> ANY(SELECT SALARY FROM TEST WHERE ID=2006);
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| ABC  | 2008 |   7000 |
+| CDF  | 2009 |   8000 |
+| SMI  | 2007 |   6000 |
++------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  SALARY> ANY(SELECT SALARY FROM TEST WHERE ID=2007);
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| ABC  | 2008 |   7000 |
+| CDF  | 2009 |   8000 |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  SALARY> ANY(SELECT SALARY FROM TEST WHERE ID>2007);
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| CDF  | 2009 |   8000 |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  SALARY> ANY(SELECT SALARY FROM TEST WHERE ID>2006);
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| ABC  | 2008 |   7000 |
+| CDF  | 2009 |   8000 |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT SALARY FROM TEST WHERE ID>2006;
++--------+
+| SALARY |
++--------+
+|   7000 |
+|   8000 |
+|   6000 |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT SALARY FROM TEST WHERE ID>2007;
++--------+
+| SALARY |
++--------+
+|   7000 |
+|   8000 |
++--------+
+2 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  SALARY BETWEEN 5000 AND 8000 ;
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| ABC  | 2008 |   7000 |
+| CDF  | 2009 |   8000 |
+| MEGH | 2006 |   5000 |
+| SMI  | 2007 |   6000 |
++------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  SALARY IN( 5000, 8000 );
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| CDF  | 2009 |   8000 |
+| MEGH | 2006 |   5000 |
++------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  NAME LIKE '%M';
+Empty set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  NAME LIKE 'M%';
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| MEGH | 2006 |   5000 |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  NAME LIKE '_C%';
+Empty set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  NAME LIKE '_M%';
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| SMI  | 2007 |   6000 |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  NAME LIKE '__F%';
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| CDF  | 2009 |   8000 |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT * FROM TEST WHERE  NAME LIKE '_E_H%';
++------+------+--------+
+| NAME | ID   | SALARY |
++------+------+--------+
+| MEGH | 2006 |   5000 |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_megh |
++----------------+
+| course         |
+| hall           |
+| stu            |
+| teacher        |
+| test           |
++----------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT*FROM HALL;
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
+|       3 | JAHANARA  |
++---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+-----------+
+| TECH_NAME | AGE  | TECH_CODE |
++-----------+------+-----------+
+| MEHERIN   |   22 |         1 |
+| KAISAR    |   20 |         3 |
+| MEGH      |   23 |         2 |
+| MEGHLA    |   33 |         3 |
+| SMITA     |   20 |         3 |
+| MITA      |   22 |         1 |
+| GITTA     |   45 |         5 |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
++-----------+------+-----------+
+14 rows in set (0.00 sec)
+
+mysql> 
+mysql> SELECT*FROM HALL;
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
+|       3 | JAHANARA  |
++---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM COURSE;
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | PRITILATA   |
+|         3 | JAHANARA    |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> UPDATE COURSE SET COURSE_NAME='DLD' WHERE COURSE_ID=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE COURSE SET COURSE_NAME='DLD LAB' WHERE COURSE_ID=3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM COURSE;
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | DLD         |
+|         3 | DLD LAB     |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE  TEST ADD COLUMN COURSE_ID INT;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+------+--------+-----------+
+| NAME | ID   | SALARY | COURSE_ID |
++------+------+--------+-----------+
+| ABC  | 2008 |   7000 |      NULL |
+| CDF  | 2009 |   8000 |      NULL |
+| MEGH | 2006 |   5000 |      NULL |
+| SMI  | 2007 |   6000 |      NULL |
++------+------+--------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE TEST SET COURSE_ID=2 WHERE SALARY=7000;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+------+--------+-----------+
+| NAME | ID   | SALARY | COURSE_ID |
++------+------+--------+-----------+
+| ABC  | 2008 |   7000 |         2 |
+| CDF  | 2009 |   8000 |      NULL |
+| MEGH | 2006 |   5000 |      NULL |
+| SMI  | 2007 |   6000 |      NULL |
++------+------+--------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE TEST SET COURSE_ID=3 WHERE SALARY=8000;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+------+--------+-----------+
+| NAME | ID   | SALARY | COURSE_ID |
++------+------+--------+-----------+
+| ABC  | 2008 |   7000 |         2 |
+| CDF  | 2009 |   8000 |         3 |
+| MEGH | 2006 |   5000 |      NULL |
+| SMI  | 2007 |   6000 |      NULL |
++------+------+--------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM COURSE WHERE COURSE_ID=(SELECT COURSE_ID FROM TEST WHERE SALARY=7000);
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | DLD         |
++-----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM COURSE WHERE COURSE_ID=(SELECT COURSE_ID FROM TEST WHERE SALARY=8000);
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         3 | DLD LAB     |
++-----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO COURSE VALUES(4,'ADC');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM COURSE;
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | DLD         |
+|         3 | DLD LAB     |
+|         4 | ADC         |
++-----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE TEST SET COURSE_ID=4 WHERE SALARY=7000;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+------+--------+-----------+
+| NAME | ID   | SALARY | COURSE_ID |
++------+------+--------+-----------+
+| ABC  | 2008 |   7000 |         4 |
+| CDF  | 2009 |   8000 |         3 |
+| MEGH | 2006 |   5000 |      NULL |
+| SMI  | 2007 |   6000 |      NULL |
++------+------+--------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE TEST SET COURSE_ID=2 WHERE SALARY=5000;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+------+--------+-----------+
+| NAME | ID   | SALARY | COURSE_ID |
++------+------+--------+-----------+
+| ABC  | 2008 |   7000 |         4 |
+| CDF  | 2009 |   8000 |         3 |
+| MEGH | 2006 |   5000 |         2 |
+| SMI  | 2007 |   6000 |      NULL |
++------+------+--------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE TEST SET SAALRY=7000 WHERE COURSE_ID=2;
+ERROR 1054 (42S22): Unknown column 'SAALRY' in 'field list'
+mysql> UPDATE TEST SET SALARY=7000 WHERE COURSE_ID=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM TEST;
++------+------+--------+-----------+
+| NAME | ID   | SALARY | COURSE_ID |
++------+------+--------+-----------+
+| ABC  | 2008 |   7000 |         4 |
+| CDF  | 2009 |   8000 |         3 |
+| MEGH | 2006 |   7000 |         2 |
+| SMI  | 2007 |   6000 |      NULL |
++------+------+--------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM COURSE WHERE COURSE_ID IN (SELECT COURSE_ID FROM TEST WHERE SAALRY=7000);
+ERROR 1054 (42S22): Unknown column 'SAALRY' in 'where clause'
+mysql> SELECT*FROM COURSE WHERE COURSE_ID IN (SELECT COURSE_ID FROM TEST WHERE SALARY=7000);
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | DLD         |
+|         4 | ADC         |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM COURSE WHERE COURSE_ID =(SELECT COURSE_ID FROM TEST WHERE SALARY=7000);
+ERROR 1242 (21000): Subquery returns more than 1 row
+
+mysql> SELECT*FROM COURSE WHERE COURSE_ID >SOME(SELECT COURSE_ID FROM TEST WHERE SALARY=7000);
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         3 | DLD LAB     |
+|         4 | ADC         |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM COURSE WHERE COURSE_ID < SOME(SELECT COURSE_ID FROM TEST WHERE SALARY=7000);
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | DLD         |
+|         3 | DLD LAB     |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM COURSE WHERE COURSE_ID < ANY(SELECT COURSE_ID FROM TEST WHERE SALARY=7000);
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | DLD         |
+|         3 | DLD LAB     |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM COURSE WHERE COURSE_ID < SOME(SELECT COURSE_ID FROM TEST WHERE SALARY>7000);
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | DLD         |
++-----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM COURSE WHERE COURSE_ID > SOME(SELECT COURSE_ID FROM TEST WHERE SALARY>7000);
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         4 | ADC         |
++-----------+-------------+
+1 row in set (0.00 sec)
+
