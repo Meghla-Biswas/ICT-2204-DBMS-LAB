@@ -1,0 +1,620 @@
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> USE MEGH;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_megh |
++----------------+
+| course         |
+| hall           |
+| stu            |
+| teacher        |
+| test           |
++----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT*FROM HALL;
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
+|       3 | JAHANARA  |
++---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TEACHER;
++-----------+------+-----------+
+| TECH_NAME | AGE  | TECH_CODE |
++-----------+------+-----------+
+| MEHERIN   |   22 |         1 |
+| KAISAR    |   20 |         3 |
+| MEGH      |   23 |         2 |
+| MEGHLA    |   33 |         3 |
+| SMITA     |   20 |         3 |
+| MITA      |   22 |         1 |
+| GITTA     |   45 |         5 |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
+| NULL      | NULL |      NULL |
++-----------+------+-----------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STU;
++-------+-----+
+| NAME  | AGE |
++-------+-----+
+| MITA  |  20 |
+| SMITA |  22 |
+| KABAB |  23 |
++-------+-----+
+3 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TEST;
++------+------+--------+-----------+
+| NAME | ID   | SALARY | COURSE_ID |
++------+------+--------+-----------+
+| ABC  | 2008 |   7000 |         4 |
+| CDF  | 2009 |   8000 |         3 |
+| MEGH | 2006 |   7000 |         2 |
+| SMI  | 2007 |   6000 |      NULL |
++------+------+--------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM COURSE;
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | DLD         |
+|         3 | DLD LAB     |
+|         4 | ADC         |
++-----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT ((SELECT AVG(SALARY) FROM TEST WHERE ID=2009)*5/100) AS DISCOUNT FROM TEST WHERE ID=2009;
++--------------+
+| DISCOUNT     |
++--------------+
+| 400.00000000 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ((SELECT AVG(SALARY) FROM TEST WHERE ID=2009)*5/100) AS DISCOUNT,NAME FROM TEST WHERE ID=2009;
++--------------+------+
+| DISCOUNT     | NAME |
++--------------+------+
+| 400.00000000 | CDF  |
++--------------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ((SELECT AVG(SALARY) FROM TEST)*5/100) AS DISCOUNT,NAME FROM TEST;
++--------------+------+
+| DISCOUNT     | NAME |
++--------------+------+
+| 350.00000000 | ABC  |
+| 350.00000000 | CDF  |
+| 350.00000000 | MEGH |
+| 350.00000000 | SMI  |
++--------------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM (SELECT NAME,ID FROM TEST)AS DUMMY_TABLE;
++------+------+
+| NAME | ID   |
++------+------+
+| ABC  | 2008 |
+| CDF  | 2009 |
+| MEGH | 2006 |
+| SMI  | 2007 |
++------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM DUMMY_TABLE;
+ERROR 1146 (42S02): Table 'megh.dummy_table' doesn't exist
+mysql> SELECT*FROM (SELECT NAME,ID FROM TEST)AS DUMMY_TABLE  WHERE D.ID=2009;
+ERROR 1054 (42S22): Unknown column 'D.ID' in 'where clause'
+mysql> SELECT*FROM (SELECT NAME,ID FROM TEST)AS DUMMY_TABLE  WHERE ID=2009;
++------+------+
+| NAME | ID   |
++------+------+
+| CDF  | 2009 |
++------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM (SELECT NAME,ID FROM TEST)AS DUMMY_TABLE  WHERE DUMMY_TABLE.ID=2006;
++------+------+
+| NAME | ID   |
++------+------+
+| MEGH | 2006 |
++------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM (SELECT NAME,ID FROM TEST)AS D  WHERE D.ID=2006;
++------+------+
+| NAME | ID   |
++------+------+
+| MEGH | 2006 |
++------+------+
+1 row in set (0.00 sec)
+
+
+mysql> CREATE TABLE STUDENT(NAME VARCHAR(20),HALL_ID INT);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO STUDENT VALUES('DFGDF',1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO STUDENT VALUES('ASD',2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO STUDENT VALUES('UIY',3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM STUDENT;
++-------+---------+
+| NAME  | HALL_ID |
++-------+---------+
+| DFGDF |       1 |
+| ASD   |       2 |
+| UIY   |       3 |
++-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT*FROM HALL WHERE HALL_ID IN(SELECT HALL_ID FROM STUDENT);
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
+|       3 | JAHANARA  |
++---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENT WHERE HALL_ID IN(SELECT HALL_ID FROM HALL);
++------+---------+
+| NAME | HALL_ID |
++------+---------+
+| ASD  |       2 |
+| UIY  |       3 |
++------+---------+
+2 rows in set (0.00 sec)
+
+mysql> UPDATE STUDENT SET HALL_ID=1 WHERE NAME='UIY';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM STUDENT;
++-------+---------+
+| NAME  | HALL_ID |
++-------+---------+
+| DFGDF |       1 |
+| ASD   |       2 |
+| UIY   |       1 |
++-------+---------+
+3 rows in set (0.00 sec)
+
+
+mysql> SELECT*FROM STUDENT WHERE HALL_ID =(SELECT HALL_ID FROM HALL GROUP BY HALL_ID HAVING COUNT(HALL_ID)=1);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT*FROM HALL;
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
+|       3 | JAHANARA  |
++---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENT WHERE HALL_ID =(SELECT HALL_ID FROM HALL GROUP BY HALL_ID HAVING COUNT(HALL_ID)=1);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT*FROM STUDENT WHERE HALL_ID IN(SELECT HALL_ID FROM HALL GROUP BY HALL_ID HAVING COUNT(HALL_ID)=1);
++------+---------+
+| NAME | HALL_ID |
++------+---------+
+| ASD  |       2 |
++------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENT WHERE HALL_ID I=(SELECT HALL_ID FROM HALL GROUP BY HALL_ID HAVING COUNT(HALL_ID)=1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'I=(SELECT HALL_ID FROM HALL GROUP BY HALL_ID HAVING COUNT(HALL_ID)=1)' at line 1
+mysql> 
+mysql> SELECT*FROM STUDENT WHERE HALL_ID =(SELECT HALL_ID FROM HALL GROUP BY HALL_ID HAVING COUNT(HALL_ID)=1);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT*FROM STUDENT WHERE HALL_ID =(SELECT HALL_ID FROM HALL GROUP BY HALL_ID HAVING COUNT(HALL_ID)>1);
+Empty set (0.00 sec)
+
+mysql> INSERT INTO HALL VALUES('ERT',3);
+ERROR 1366 (HY000): Incorrect integer value: 'ERT' for column 'HALL_ID' at row 1
+mysql> INSERT INTO HALL VALUES(3,'ERT');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM HALL;
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
+|       3 | JAHANARA  |
+|       3 | ERT       |
++---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENT WHERE HALL_ID =(SELECT HALL_ID FROM HALL GROUP BY HALL_ID HAVING COUNT(HALL_ID)=1);
++------+---------+
+| NAME | HALL_ID |
++------+---------+
+| ASD  |       2 |
++------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENT WHERE HALL_ID =(SELECT HALL_ID FROM HALL GROUP BY HALL_ID HAVING COUNT(HALL_ID)>1);
+Empty set (0.00 sec)
+
+mysql> SELECT*FROM HALL WHERE HALL_ID =(SELECT HALL_ID FROM STUDENT GROUP BY HALL_ID HAVING COUNT(HALL_ID)>1);
+Empty set (0.00 sec)
+
+mysql> SELECT*FROM HALL WHERE HALL_ID =(SELECT HALL_ID FROM STUDENT GROUP BY HALL_ID HAVING COUNT(HALL_ID)=1);
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
++---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO TABLE VALUES(1,'ROKEYA');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABLE VALUES(1,'ROKEYA')' at line 1
+mysql> INSERT INTO HALL VALUES(1,'ROKEYA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM HALL;
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
+|       3 | JAHANARA  |
+|       3 | ERT       |
+|       1 | ROKEYA    |
++---------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM HALL WHERE HALL_ID =(SELECT HALL_ID FROM STUDENT GROUP BY HALL_ID HAVING COUNT(HALL_ID)>1);
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       1 | ROKEYA    |
++---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENT WHERE HALL_ID =(SELECT HALL_ID FROM HALL GROUP BY HALL_ID HAVING COUNT(HALL_ID)>1);
+Empty set (0.00 sec)
+
+mysql> INSERT INTO STUDENT VALUES('SMI',3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM STUDENT WHERE HALL_ID =(SELECT HALL_ID FROM HALL GROUP BY HALL_ID HAVING COUNT(HALL_ID)>1);
++------+---------+
+| NAME | HALL_ID |
++------+---------+
+| SMI  |       3 |
++------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENT;
++-------+---------+
+| NAME  | HALL_ID |
++-------+---------+
+| DFGDF |       1 |
+| ASD   |       2 |
+| UIY   |       1 |
+| SMI   |       3 |
++-------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENT WHERE(NAME ,HALL_ID) IN (SELECT HALL_ID,HALL_NAME FROM HALL);
+Empty set, 8 warnings (0.00 sec)
+
+mysql> CREATE TABLE EX( EXID INT,EXNAME VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO EX VALUES(1,'SDF');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO EX VALUES(2,'ABC');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO EX VALUES(3,'FGHF');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> CREATE TABLE EX2( EX2ID INT,EXNAME VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO EX2 VALUES(1,'SDF');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> DROP TABLE EX2;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE EX2(EXNAME VARCHAR(20),EX2ID INT);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO EX2 VALUES('SDF',1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO EX2 VALUES(2,'ABC');
+ERROR 1366 (HY000): Incorrect integer value: 'ABC' for column 'EX2ID' at row 1
+mysql> INSERT INTO EX2 VALUES('ABC',2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO EX VALUES('FGHF',3);
+ERROR 1366 (HY000): Incorrect integer value: 'FGHF' for column 'EXID' at row 1
+mysql> INSERT INTO EX2 VALUES('FGHF',3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM EX;
++------+--------+
+| EXID | EXNAME |
++------+--------+
+|    1 | SDF    |
+|    2 | ABC    |
+|    3 | FGHF   |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EX2;
++--------+-------+
+| EXNAME | EX2ID |
++--------+-------+
+| SDF    |     1 |
+| ABC    |     2 |
+| FGHF   |     3 |
++--------+-------+
+3 rows in set (0.00 sec)
+
+mysql>  SELECT*FROM EX WHERE(EXID,EXNAME) IN(SELECT EX2ID,EXNAME FROM EX2);
++------+--------+
+| EXID | EXNAME |
++------+--------+
+|    1 | SDF    |
+|    2 | ABC    |
+|    3 | FGHF   |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  SELECT*FROM EX2 WHERE(EX2ID,EXNAME) IN(SELECT EXID,EXNAME FROM EX);
++--------+-------+
+| EXNAME | EX2ID |
++--------+-------+
+| SDF    |     1 |
+| ABC    |     2 |
+| FGHF   |     3 |
++--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO EX2 VALUES('ERT',4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  SELECT*FROM EX WHERE(EXID,EXNAME) IN(SELECT EX2ID,EXNAME FROM EX2);
++------+--------+
+| EXID | EXNAME |
++------+--------+
+|    1 | SDF    |
+|    2 | ABC    |
+|    3 | FGHF   |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  SELECT*FROM EX2 WHERE(EX2ID,EXNAME) IN(SELECT EXID,EXNAME FROM EX);
++--------+-------+
+| EXNAME | EX2ID |
++--------+-------+
+| SDF    |     1 |
+| ABC    |     2 |
+| FGHF   |     3 |
++--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE SUPPLIER(ID INT,NAME VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DROP SUPPLIER;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SUPPLIER' at line 1
+mysql> DROP  TABLE SUPPLIER;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT*FROM TEST;
++------+------+--------+-----------+
+| NAME | ID   | SALARY | COURSE_ID |
++------+------+--------+-----------+
+| ABC  | 2008 |   7000 |         4 |
+| CDF  | 2009 |   8000 |         3 |
+| MEGH | 2006 |   7000 |         2 |
+| SMI  | 2007 |   6000 |      NULL |
++------+------+--------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM HALL;
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
+|       3 | JAHANARA  |
+|       3 | ERT       |
+|       1 | ROKEYA    |
++---------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENT;
++-------+---------+
+| NAME  | HALL_ID |
++-------+---------+
+| DFGDF |       1 |
+| ASD   |       2 |
+| UIY   |       1 |
+| SMI   |       3 |
++-------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT S INNER JOIN HALL H  ON S.HALL_ID =H.HALL_ID;
++-------+---------+---------+-----------+
+| NAME  | HALL_ID | HALL_ID | HALL_NAME |
++-------+---------+---------+-----------+
+| ASD   |       2 |       2 | PRITILATA |
+| SMI   |       3 |       3 | JAHANARA  |
+| SMI   |       3 |       3 | ERT       |
+| UIY   |       1 |       1 | ROKEYA    |
+| DFGDF |       1 |       1 | ROKEYA    |
++-------+---------+---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO HALL VALUES(4,'TARAMON');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM HALL;
++---------+-----------+
+| HALL_ID | HALL_NAME |
++---------+-----------+
+|       2 | PRITILATA |
+|       3 | JAHANARA  |
+|       3 | ERT       |
+|       1 | ROKEYA    |
+|       4 | TARAMON   |
++---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT S INNER JOIN HALL H  ON S.HALL_ID =H.HALL_ID;
++-------+---------+---------+-----------+
+| NAME  | HALL_ID | HALL_ID | HALL_NAME |
++-------+---------+---------+-----------+
+| ASD   |       2 |       2 | PRITILATA |
+| SMI   |       3 |       3 | JAHANARA  |
+| SMI   |       3 |       3 | ERT       |
+| UIY   |       1 |       1 | ROKEYA    |
+| DFGDF |       1 |       1 | ROKEYA    |
++-------+---------+---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT S NATURAL JOIN HALL H;
++---------+-------+-----------+
+| HALL_ID | NAME  | HALL_NAME |
++---------+-------+-----------+
+|       2 | ASD   | PRITILATA |
+|       3 | SMI   | JAHANARA  |
+|       3 | SMI   | ERT       |
+|       1 | UIY   | ROKEYA    |
+|       1 | DFGDF | ROKEYA    |
++---------+-------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM HALL H INNER JOIN STUDENT S  ON H.HALL_ID =S.HALL_ID;
++---------+-----------+-------+---------+
+| HALL_ID | HALL_NAME | NAME  | HALL_ID |
++---------+-----------+-------+---------+
+|       2 | PRITILATA | ASD   |       2 |
+|       3 | JAHANARA  | SMI   |       3 |
+|       3 | ERT       | SMI   |       3 |
+|       1 | ROKEYA    | UIY   |       1 |
+|       1 | ROKEYA    | DFGDF |       1 |
++---------+-----------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT S CROSS JOIN HALL H;
++-------+---------+---------+-----------+
+| NAME  | HALL_ID | HALL_ID | HALL_NAME |
++-------+---------+---------+-----------+
+| SMI   |       3 |       2 | PRITILATA |
+| UIY   |       1 |       2 | PRITILATA |
+| ASD   |       2 |       2 | PRITILATA |
+| DFGDF |       1 |       2 | PRITILATA |
+| SMI   |       3 |       3 | JAHANARA  |
+| UIY   |       1 |       3 | JAHANARA  |
+| ASD   |       2 |       3 | JAHANARA  |
+| DFGDF |       1 |       3 | JAHANARA  |
+| SMI   |       3 |       3 | ERT       |
+| UIY   |       1 |       3 | ERT       |
+| ASD   |       2 |       3 | ERT       |
+| DFGDF |       1 |       3 | ERT       |
+| SMI   |       3 |       1 | ROKEYA    |
+| UIY   |       1 |       1 | ROKEYA    |
+| ASD   |       2 |       1 | ROKEYA    |
+| DFGDF |       1 |       1 | ROKEYA    |
+| SMI   |       3 |       4 | TARAMON   |
+| UIY   |       1 |       4 | TARAMON   |
+| ASD   |       2 |       4 | TARAMON   |
+| DFGDF |       1 |       4 | TARAMON   |
++-------+---------+---------+-----------+
+20 rows in set (0.00 sec)
+
+mysql> SELECT * FROM HALL H  LEFT JOIN STUDENT S  ON H.HALL_ID =S.HALL_ID;
++---------+-----------+-------+---------+
+| HALL_ID | HALL_NAME | NAME  | HALL_ID |
++---------+-----------+-------+---------+
+|       2 | PRITILATA | ASD   |       2 |
+|       3 | JAHANARA  | SMI   |       3 |
+|       3 | ERT       | SMI   |       3 |
+|       1 | ROKEYA    | UIY   |       1 |
+|       1 | ROKEYA    | DFGDF |       1 |
+|       4 | TARAMON   | NULL  |    NULL |
++---------+-----------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM HALL H  RIGHT JOIN STUDENT S  ON H.HALL_ID =S.HALL_ID;
++---------+-----------+-------+---------+
+| HALL_ID | HALL_NAME | NAME  | HALL_ID |
++---------+-----------+-------+---------+
+|       1 | ROKEYA    | DFGDF |       1 |
+|       2 | PRITILATA | ASD   |       2 |
+|       1 | ROKEYA    | UIY   |       1 |
+|       3 | ERT       | SMI   |       3 |
+|       3 | JAHANARA  | SMI   |       3 |
++---------+-----------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT S RIGHT JOIN HALL H ON S.HALL_ID =H.HALL_ID;
++-------+---------+---------+-----------+
+| NAME  | HALL_ID | HALL_ID | HALL_NAME |
++-------+---------+---------+-----------+
+| ASD   |       2 |       2 | PRITILATA |
+| SMI   |       3 |       3 | JAHANARA  |
+| SMI   |       3 |       3 | ERT       |
+| UIY   |       1 |       1 | ROKEYA    |
+| DFGDF |       1 |       1 | ROKEYA    |
+| NULL  |    NULL |       4 | TARAMON   |
++-------+---------+---------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT S FULL JOIN HALL H ON S.HALL_ID =H.HALL_ID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FULL JOIN HALL H ON S.HALL_ID =H.HALL_ID' at line 1
+mysql> SELECT H.HALL_ID,H.HALL_NAME,S.NAME,S.HALL_ID FROM HALL as H  LEFT JOIN STUDENT S  ON H.HALL_ID =S.HALL_ID UNION ALL SELECT H.HALL_ID,H.HALL_NAME,S.NAME,S.HALL_ID FROM HALL as H  RIGHT JOIN STUDENT S  ON H.HALL_ID =S.HALL_ID;
++---------+-----------+-------+---------+
+| HALL_ID | HALL_NAME | NAME  | HALL_ID |
++---------+-----------+-------+---------+
+|       2 | PRITILATA | ASD   |       2 |
+|       3 | JAHANARA  | SMI   |       3 |
+|       3 | ERT       | SMI   |       3 |
+|       1 | ROKEYA    | UIY   |       1 |
+|       1 | ROKEYA    | DFGDF |       1 |
+|       4 | TARAMON   | NULL  |    NULL |
+|       1 | ROKEYA    | DFGDF |       1 |
+|       2 | PRITILATA | ASD   |       2 |
+|       1 | ROKEYA    | UIY   |       1 |
+|       3 | ERT       | SMI   |       3 |
+|       3 | JAHANARA  | SMI   |       3 |
++---------+-----------+-------+---------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT H.HALL_ID,H.HALL_NAME,S.NAME,S.HALL_ID FROM HALL as H  LEFT JOIN STUDENT S  ON H.HALL_ID =S.HALL_ID UNION  SELECT H.HALL_ID,H.HALL_NAME,S.NAME,S.HALL_ID FROM HALL as H  RIGHT JOIN STUDENT S  ON H.HALL_ID =S.HALL_ID;
++---------+-----------+-------+---------+
+| HALL_ID | HALL_NAME | NAME  | HALL_ID |
++---------+-----------+-------+---------+
+|       2 | PRITILATA | ASD   |       2 |
+|       3 | JAHANARA  | SMI   |       3 |
+|       3 | ERT       | SMI   |       3 |
+|       1 | ROKEYA    | UIY   |       1 |
+|       1 | ROKEYA    | DFGDF |       1 |
+|       4 | TARAMON   | NULL  |    NULL |
++---------+-----------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql>  notee;
