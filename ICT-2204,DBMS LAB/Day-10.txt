@@ -1,0 +1,167 @@
+mysql> use megh;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_megh |
++----------------+
+| course         |
+| ex             |
+| ex2            |
+| hall           |
+| stu            |
+| student        |
+| teacher        |
+| test           |
++----------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT*FROM COURSE;
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | DLD         |
+|         3 | DLD LAB     |
+|         4 | ADC         |
++-----------+-------------+
+3 rows in set (0.01 sec)
+
+mysql> CREATE VIEW COURSE_ID   AS SELECT*FROM COURSE WHERE COURSE_ID>2;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT*FROM COURSE_ID;
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         3 | DLD LAB     |
+|         4 | ADC         |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE VIEW `COURSE_ID ABOVE 2`  AS SELECT*FROM COURSE WHERE COURSE_ID>2;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT*FROM `COURSE_ID ABOVE 2`;
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         3 | DLD LAB     |
+|         4 | ADC         |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUDENT;
++-------+---------+
+| NAME  | HALL_ID |
++-------+---------+
+| DFGDF |       1 |
+| ASD   |       2 |
+| UIY   |       1 |
+| SMI   |       3 |
++-------+---------+
+4 rows in set (0.01 sec)
+
+mysql> CREATE VIEW `HALL_ID ABOVE AVERAGE` AS SELECT*FROM STUDENT WHERE HALL_ID>(STUDENT AVG(HALL_ID)FROM STUDENT);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AVG(HALL_ID)FROM STUDENT)' at line 1
+mysql> CREATE VIEW `HALL_ID ABOVE AVERAGE` AS SELECT*FROM STUDENT WHERE HALL_ID>( SELECT  AVG(HALL_ID)FROM STUDENT);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT*FROM `HALL_ID ABOVE AVERAGE`;
++------+---------+
+| NAME | HALL_ID |
++------+---------+
+| ASD  |       2 |
+| SMI  |       3 |
++------+---------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE VIEW  `COURSE_ID ABOVE AVERAGE` AS SELECT * FROM COURSE WHERE COURSE_ID > (SELECT AVG(COURSE_ID) FROM COURSE); 
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM `COURSE_ID ABOVE AVERAGE`;
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         4 | ADC         |
++-----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE OR REPLACE  VIEW COURSE_ID   AS SELECT*FROM COURSE WHERE COURSE_ID<3;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM COURSE_ID;
++-----------+-------------+
+| COURSE_ID | COURSE_NAME |
++-----------+-------------+
+|         2 | DLD         |
++-----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE OR REPLACE  VIEW COURSE_ID   AS SELECT*FROM COURSE WHERE COURSE_ID<2;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM COURSE_ID;
+Empty set (0.00 sec)
+
+mysql> DROP VIEW COURSE_ID;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM COURSE_ID;
+ERROR 1146 (42S02): Table 'megh.course_id' doesn't exist
+mysql> CREATE USER 'MEGHLA'@'LOCALHOST' IDENTIFIED BY '1234';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT USER FROM MYSQL.USER;
++------------------+
+| USER             |
++------------------+
+| MEGHLA           |
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
++------------------+
+5 rows in set (0.00 sec)
+
+mysql> GRANT ALL PRIVILEGES ON IIT. * TO 'MEGHLA'@'LOCALHOST';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> MYSQL -U MRGHLA -P 1234;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MYSQL -U MRGHLA -P 1234' at line 1
+mysql> Terminal close -- exit!
+mysql> DROP USER 'MEGHLA'@'LOCALHOST';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> Terminal close -- exit!
+mysql> GRANT SELECT ON IIT.TEACHER TO 'MEGHLA'@'LOCALHOST';
+ERROR 1410 (42000): You are not allowed to create a user with GRANT
+mysql>  CREATE USER 'smita'@'LOCALHOST' IDENTIFIED BY '1234';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  SELECT USER FROM MYSQL.USER;
++------------------+
+| USER             |
++------------------+
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
+| smita            |
++------------------+
+5 rows in set (0.00 sec)
+
+mysql> GRANT ALL PRIVILEGES ON IIT. * TO 'smita'@'LOCALHOST';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> GRANT SELECT ON IIT.TEACHER TO 'smita'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> REVOKE ALL PRIVILEGES ON IIT.TEACHER FROM 'SMITA'@'LOCALHOST';
+ERROR 1147 (42000): There is no such grant defined for user 'SMITA' on host 'localhost' on table 'teacher'
+mysql> REVOKE ALL PRIVILEGES ON IIT.TEACHER FROM 'smita'@'LOCALHOST';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> REVOKE ALL PRIVILEGES ON IIT. TO 'smita'@'LOCALHOST';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TO 'smita'@'LOCALHOST'' at line 1
+mysql> REVOKE ALL PRIVILEGES ON IIT.* TO 'smita'@'LOCALHOST';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TO 'smita'@'LOCALHOST'' at line 1
+mysql> Terminal close -- exit!
